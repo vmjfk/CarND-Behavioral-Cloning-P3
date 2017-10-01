@@ -167,5 +167,7 @@ The final results can be seen in the videos created from the CNN driving the
 simulator, named “good_run.mp4” and “run_5_epochs.mp4”. Each show the car going
 around the track without finding a river, dirt trail, or other off-limits area.
 
+![](media/good_run.mp4)
+
 I used an adam optimizer so that manually training the learning rate wasn't
 necessary.
