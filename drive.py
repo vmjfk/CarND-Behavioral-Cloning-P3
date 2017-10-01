@@ -36,7 +36,7 @@ class SimplePIController:
     def update(self, measurement):
         # proportional error
         self.error = self.set_point - measurement
-
+        print("set_point=",self.set_point," measurement=",measurement)
         # integral error
         self.integral += self.error
 
@@ -61,6 +61,7 @@ def telemetry(sid, data):
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
+        image_array = image_array[:,:,::-1] # added in v2 at direction of udacity. Bug. 
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))

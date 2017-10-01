@@ -137,8 +137,7 @@ Center lane clockwise driving.
 
 I then recorded the vehicle recovering from the left side and right sides of the
 road back to center so that the vehicle would learn to recover when it found
-itself out of bounds. These images show what a recovery looks like starting from
-... :
+itself out of bounds. These images show what a recovery looks like.
 
 ![](media/c87d1c7f969e5b2f35b0d57c22223d07.jpg)
 
@@ -156,18 +155,33 @@ I did not augment the data set by flipping. Or adding left or right camera data.
 
 After the collection process, I had 13,490 data points.
 
-I finally randomly shuffled the data set and put 20% of the data into a
-validation set.
+I randomly shuffled the data set and put 20% of the data into a validation set.
 
 I used this training data for training the model. The validation set helped
 determine if the model was over or under fitting. The ideal number of epochs was
 5 as evidenced by the car staying on the road.
 
-The final results can be seen in the videos created from the CNN driving the
-simulator, named “good_run.mp4” and “run_5_epochs.mp4”. Each show the car going
-around the track without finding a river, dirt trail, or other off-limits area.
+P.S. Reviewer comment revealed a bug in drive.py where the images being fed into
+the model during training were RGB, but the images sent from the simulator in
+autonomous mode were BGR. After fixing this bug and running again, two changes
+were discovered in the behavior of the model:
 
-![](media/good_run.mp4)
+1) The model drove much more smoothly with less jerky adjustment to steering.
+
+2) The model drove off the track whenever it saw a shadow.
+
+![](media/a3452fcde2fd96d87020f040919d4b65.jpg)
+
+Shadow causing confusion.
+
+I corrected for this by adding more training data with the car moving in a
+straight line through the shadow, rather than correcting while in the shadow.
+After retraining, the model now stays on the track and doesn’t veer outside the
+lines.
+
+The final results can be seen in the video created from the CNN driving the
+simulator, named “run_v2.1.mp4”. It shows the car going around the track without
+finding a river, dirt trail, or other off-limits area.
 
 I used an adam optimizer so that manually training the learning rate wasn't
 necessary.
